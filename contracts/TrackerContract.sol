@@ -21,8 +21,8 @@ contract TrackerContract {
         uint256 createdAt;
     }
     struct Transitioner{
-        string name;
-        string description;   
+        string name; // FDA
+        string description;   // fda dyal dwa
         uint256 createdAt;
     }
     struct Transition{
@@ -30,6 +30,7 @@ contract TrackerContract {
         bool decision;
         uint256 createdAt;
     }
+    // dwa, dwa description, [{}, {addressFDA -> Trqnsitioner, true}]
     struct Item{
         string name;
         string description;

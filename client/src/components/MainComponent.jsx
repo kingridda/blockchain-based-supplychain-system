@@ -72,7 +72,7 @@ class Main extends Component{
                 <div>The stored value is: {this.state.storageValue}</div>
 
 
-                <Test />
+                <Track />
                 
                 manu: { this.state.manufacturer}
             </div>

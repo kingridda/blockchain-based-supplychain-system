@@ -36,7 +36,6 @@ function Track(props){
                 </Col>
             </Row>
 
-
         </div>
     );
 }
