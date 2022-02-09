@@ -69,12 +69,16 @@ class Main extends Component{
         //   }
         return (
             <div className="App">
-                <div>The stored value is: {this.state.storageValue}</div>
 
-
-                <Track />
+               {/*
+                     <div>The stored value is: {this.state.storageValue}</div>
+                      <Track />
+                      manu: { this.state.manufacturer}
+               */}          
                 
-                manu: { this.state.manufacturer}
+                <Test />
+
+                
             </div>
         );
     }
