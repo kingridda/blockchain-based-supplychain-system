@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import Track from './TrackComponent';
 import Test from './TestComponent';
+import PayTransition from './PayTransitionComponent';
 
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
 import TrackerContract from "../contracts/TrackerContract.json";
@@ -67,6 +68,8 @@ class Main extends Component{
         // if (!this.state.web3) {
         //     return <div>Loading Web3, accounts, and contract...</div>;
         //   }
+
+
         return (
             <div className="App">
 
@@ -76,9 +79,7 @@ class Main extends Component{
                       manu: { this.state.manufacturer}
                */}          
                 
-                <Test />
-
-                
+                <Test />               
             </div>
         );
     }
