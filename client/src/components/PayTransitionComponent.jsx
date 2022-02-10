@@ -1,7 +1,7 @@
 import React from "react";
 import "../PayTransition.css";
 
-function PayTransition({ setOpenPayTransition }) {
+function PayTransition(props) {
   return (
     <div className="payTransitionBackground">
       <div className="payTransitionContainer">

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 
 import Track from './TrackComponent';
+import HeaderNav from './HeaderNavComponent';
 import Test from './TestComponent';
 import Test2 from './Test2Component';
 import PayTransition from './PayTransitionComponent';
@@ -13,7 +14,7 @@ import getWeb3 from "../getWeb3";
 
 
 class Main extends Component{
-    state = { storageValue: 7, web3: null, accounts: null, trackerContract: null, manufacturer: null, item: null, a: null, itemIn: null};
+    state = {web3: null, accounts: null, ii: null, trackerContract: null, supplyBankContract: null, supplyCoinContract: null, manufacturer: null, item: null, a: null, itemIn: null};
 
     componentDidMount = async () => {
       try {
@@ -25,16 +26,26 @@ class Main extends Component{
   
         // Get the contract instance.
         const networkId = await web3.eth.net.getId();
-        const deployedNetwork2 = TrackerContract.networks[networkId];
-        
+        const deployedNetwork1 = TrackerContract.networks[networkId];
+        const deployedNetwork2 = SupplyBank.networks[networkId];
+        const deployedNetwork3 = SupplyCoin.networks[networkId];
+
         const trackerInstance = new web3.eth.Contract(
             TrackerContract.abi,
-            deployedNetwork2 && deployedNetwork2.address
+            deployedNetwork1 && deployedNetwork1.address
+        );
+        const supplyBankInstance = new web3.eth.Contract(
+          SupplyBank.abi,
+          deployedNetwork2 && deployedNetwork2.address
+        );
+        const supplyCoinInstance = new web3.eth.Contract(
+          SupplyCoin.abi,
+          deployedNetwork3 && deployedNetwork3.address
         );
   
         // Set web3, accounts, and contract to the state, and then proceed with an
         // example of interacting with the contract's methods.
-        this.setState({ web3, accounts, trackerContract: trackerInstance }, this.runExample);
+        this.setState({ web3, accounts, trackerContract: trackerInstance, supplyBankContract: supplyBankInstance, supplyCoinContract: supplyCoinInstance }, this.runExample);
       } catch (error) {
         // Catch any errors for any of the above operations.
         alert(
@@ -52,12 +63,12 @@ class Main extends Component{
       const itemResponse = await trackerContract.methods.getItem("product00").call();
 
 
-      await trackerContract.methods.addItem("product02", "name2", "description2").call();
-      const itemResponse2 = await trackerContract.methods.getItem("product02").call();
-      console.log(itemResponse2);
+      // await trackerContract.methods.addItem("product02", "name2", "description2").call();
+      // const itemResponse2 = await trackerContract.methods.getItem("product02").call();
+      console.log(itemResponse);
   
       // Update state with the result.
-      this.setState({  item: itemResponse, a: {o: 8, b:9}, itemIn: itemResponse2 });
+      this.setState({  item: itemResponse, itemIn: itemResponse });
 
     };
 
@@ -68,11 +79,8 @@ class Main extends Component{
         //   }
         return (
             <div className="App">
-                <div>The stored value is: {this.state.storageValue}</div>
-                <Test2 item={ this.state.item} /> 
-                <br />
-                <Test />
-                description: {this.state.itemIn} 
+                <HeaderNav />
+                <Track item={this.state.item}/>
             </div>
         );
     }
