@@ -58,7 +58,6 @@ function Test(props){
               <RenderCard align={"left-aligned"} itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-secondary"}/>
               <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-info"}/>
               <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} align={"left-aligned"} circleCol={"bg-warning"}/>                      
-
               <article className="timeline-entry begin">
                 <div className="timeline-entry-inner">
                   <div className="timeline-icon" style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}>
