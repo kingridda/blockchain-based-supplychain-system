@@ -5,16 +5,15 @@ import Test from './TestComponent';
 import Test2 from './Test2Component';
 import PayTransition from './PayTransitionComponent';
 
-import SimpleStorageContract from "../contracts/SimpleStorage.json";
 import TrackerContract from "../contracts/TrackerContract.json";
 import SupplyBank from "../contracts/SupplyBank.json"
-import SupplyToken from "../contracts/SupplyToken.json"
+import SupplyCoin from "../contracts/SupplyCoin.json"
 import getWeb3 from "../getWeb3";
 
 
 
 class Main extends Component{
-    state = { storageValue: 7, web3: null, accounts: null, contract: null, trackerContract: null, manufacturer: null, item: null, a: null, itemIn: null};
+    state = { storageValue: 7, web3: null, accounts: null, trackerContract: null, manufacturer: null, item: null, a: null, itemIn: null};
 
     componentDidMount = async () => {
       try {
@@ -26,12 +25,8 @@ class Main extends Component{
   
         // Get the contract instance.
         const networkId = await web3.eth.net.getId();
-        const deployedNetwork = SimpleStorageContract.networks[networkId];
         const deployedNetwork2 = TrackerContract.networks[networkId];
-        const instance = new web3.eth.Contract(
-          SimpleStorageContract.abi,
-          deployedNetwork && deployedNetwork.address,
-        );
+        
         const trackerInstance = new web3.eth.Contract(
             TrackerContract.abi,
             deployedNetwork2 && deployedNetwork2.address
@@ -39,7 +34,7 @@ class Main extends Component{
   
         // Set web3, accounts, and contract to the state, and then proceed with an
         // example of interacting with the contract's methods.
-        this.setState({ web3, accounts, contract: instance, trackerContract: trackerInstance }, this.runExample);
+        this.setState({ web3, accounts, trackerContract: trackerInstance }, this.runExample);
       } catch (error) {
         // Catch any errors for any of the above operations.
         alert(
@@ -50,13 +45,10 @@ class Main extends Component{
     };
   
     runExample = async () => {
-      const { accounts, contract, trackerContract } = this.state;
+      const { accounts, trackerContract } = this.state;
   
-      //Stores a given value, 5 by default.
-   //  await contract.methods.set(5).send({ from: accounts[0] });
-  
+
       // Get the value from the contract to prove it worked.
-      const response = await contract.methods.get().call();
       const itemResponse = await trackerContract.methods.getItem("product00").call();
 
 
@@ -65,7 +57,7 @@ class Main extends Component{
       console.log(itemResponse2);
   
       // Update state with the result.
-      this.setState({ storageValue: response, item: itemResponse, a: {o: 8, b:9}, itemIn: itemResponse2 });
+      this.setState({  item: itemResponse, a: {o: 8, b:9}, itemIn: itemResponse2 });
 
     };
 
