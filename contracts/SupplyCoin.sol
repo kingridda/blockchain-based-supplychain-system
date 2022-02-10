@@ -1,9 +1,9 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 
-contract SupplyToken {
-    string NAME = "SupplyToken";
-    string SYMBOL = "SPLT";
+contract SupplyCoin {
+    string NAME = "SupplyCoin";
+    string SYMBOL = "SPL";
     uint totalMinted = 0;
     address deployer;
     // supply contract address has previliges to mint and burn
@@ -13,6 +13,7 @@ contract SupplyToken {
     
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowances;
+
 
     modifier onlySupplyContract(){
         require(msg.sender == supplyContract, "Only Supply Contract Allowed");
@@ -89,7 +90,6 @@ contract SupplyToken {
     function approve(address _spender, uint256 _value) public returns (bool success) {
         allowances[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
-        return true;
     }
     
     function allowance(address _owner, address _spender) public view returns (uint256 remaining) {
