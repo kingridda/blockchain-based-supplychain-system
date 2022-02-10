@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import Track from './TrackComponent';
 import Test from './TestComponent';
 import Test2 from './Test2Component';
+import PayTransition from './PayTransitionComponent';
 
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
 import TrackerContract from "../contracts/TrackerContract.json";
@@ -70,14 +71,15 @@ class Main extends Component{
 
     
     render(){
-        if (!this.state.web3) {
-            return <div>Loading Web3, accounts, and contract...</div>;
-          }
+        // if (!this.state.web3) {
+        //     return <div>Loading Web3, accounts, and contract...</div>;
+        //   }
         return (
             <div className="App">
                 <div>The stored value is: {this.state.storageValue}</div>
                 <Test2 item={ this.state.item} /> 
                 <br />
+                <Test />
                 description: {this.state.itemIn} 
             </div>
         );
