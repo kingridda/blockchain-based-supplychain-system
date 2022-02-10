@@ -51,8 +51,8 @@ function Track(props){
               props.item && props.item.transitions.map((transition, index) => 
                 (<RenderCard key={transition.name+transition.createdAt+index} 
                   onClick={props.payManufacturarModal}
-                  itemname = {props.transitioners[transition.transitionerAddr].name}
-                  itemdescription = {props.transitioners[transition.transitionerAddr].description}
+                  itemname = {""}
+                  itemdescription = {""}
                   itemDate={transition.createdAt} 
                   circleCol={(transition.decision)?"bg-success":"bg-danger"}
                    align={(index%2)?"left-aligned":""} />))
