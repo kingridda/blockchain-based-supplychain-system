@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 //0xc27a6adac593d1c02355f307ea92f6261269566d
 
 import "../test.css";
+import { Button } from "reactstrap";
 
 
 
@@ -22,7 +23,6 @@ function RenderCard({itemname, itemdescription, align, circleCol, itemDate}){
         <div className="timeline-label">
           <h2><a href="#">{itemname}</a></h2>
           <p>{itemdescription}</p>
-          <button onClick={() => { }}> Open </button>          
 
         </div>
       </div>
@@ -49,13 +49,20 @@ function Track(props){
               </p>
               {
               props.item && props.item.transitions.map((transition, index) => 
-                (<RenderCard key={transition.name+transition.createdAt+index} itemDate={transition.createdAt} circleCol={(transition.decision)?"bg-success":"bg-danger"} align={(index%2)?"left-aligned":""} />))
+                (<RenderCard key={transition.name+transition.createdAt+index} 
+                  onClick={props.payManufacturarModal}
+                  itemname = {props.transitioners[transition.transitionerAddr].name}
+                  itemdescription = {props.transitioners[transition.transitionerAddr].description}
+                  itemDate={transition.createdAt} 
+                  circleCol={(transition.decision)?"bg-success":"bg-danger"}
+                   align={(index%2)?"left-aligned":""} />))
               }
-
-              <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-success"}/>
+              <RenderCard  itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-success"}/>
               <RenderCard align={"left-aligned"} itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-secondary"}/>
               <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-info"}/>
               <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} align={"left-aligned"} circleCol={"bg-warning"}/>                      
+              <Button onClick={props.payManufacturarModal}>loooo</Button>
+
               <article className="timeline-entry begin">
                 <div className="timeline-entry-inner">
                   <div className="timeline-icon" style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}>

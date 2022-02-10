@@ -1,6 +1,6 @@
 import React from "react";
 import {Navbar, Collapse, NavItem,
-    NavLink, NavbarBrand, Nav, NavbarToggler, } from "reactstrap";
+    NavLink, NavbarBrand, Nav, Button,  } from "reactstrap";
 
 function HeaderNav(props){
     return (
@@ -9,20 +9,12 @@ function HeaderNav(props){
             <NavbarBrand href="/">Supply App</NavbarBrand>
             <Nav className="me-auto" navbar>
               <NavItem>
-                <NavLink href="/">
-                  Components
-                </NavLink>
-              </NavItem>
-            </Nav>
-            <Nav className="me-auto" navbar>
-              <NavItem>
-                <NavLink href="/">
-                  Components
+                <NavLink onClick="">
+                  <Button color="warning" onClick={props.purchaseCoinModal}> Get SupplyCoin (SPL)</Button>
                 </NavLink>
               </NavItem>
             </Nav>
         </Navbar>
-        
       </div>
     );
 }
