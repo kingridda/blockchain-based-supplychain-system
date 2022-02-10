@@ -61,13 +61,13 @@ contract TrackerContract {
     function getItem(string memory id) external view returns(Item memory){
         return items[id];
     }
-    function addManufacturer(address id, string memory name, string memory description)external onlyAdmin{
+    function addManufacturer(address id, string memory name, string memory description)external {
         Manufacturer storage man = manufacturers[id];
         man.name = name;
         man.description = description;
         man.createdAt = block.timestamp;
     }
-    function addTransitioner(address id, string memory name, string memory description)external onlyAdmin{
+    function addTransitioner(address id, string memory name, string memory description)external {
         Transitioner storage tr = transitioners[id];
         tr.name = name;
         tr.description = description;
@@ -85,7 +85,7 @@ contract TrackerContract {
         items[id].transitions.push(Transition(msg.sender, decision, block.timestamp));
     }
     //flag product
-    function flagProduct(string memory id) onlyManufacturer external{
+    function flagProduct(string memory id)  external{
         items[id].transitions.push(Transition(msg.sender, false, block.timestamp));
     }
 }
