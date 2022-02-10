@@ -14869,11 +14869,11 @@
       "events": {},
       "links": {},
       "address": "0xb6bA5Efe776505af67FB5520044067f45D8d9590",
-      "transactionHash": "0xc235877b1d04b0f3bad8cf43bee2bbc594eeb56965a83094b6cb367f65272b68"
+      "transactionHash": "0x027f0667d1acdd2770b30c919d16827cf7f6330cf0dd3ee73bc297a9ff521231"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-09T04:46:07.549Z",
+  "updatedAt": "2022-02-09T13:01:48.823Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Store & Widthdraw Eth, using Compound under the hood",

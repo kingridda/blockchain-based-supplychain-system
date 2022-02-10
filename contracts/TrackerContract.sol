@@ -68,8 +68,12 @@ contract TrackerContract {
     function addTransitioner(address id, Transitioner calldata transitioner)external onlyAdmin{
         transitioners[id] = transitioner;
     }
-    function addItem(string memory id, Item calldata item)external onlyManufacturer {
-        items[id] = item;
+    function addItem(string memory id, string memory name,string memory description)external {
+        Item storage it = items[id];
+        it.name = name;
+        it.description = description;
+        it.createdAt = block.timestamp;
+        it.transitions.push(Transition(msg.sender, true, block.timestamp));
     }
     function addTransition(string memory id, bool decision)external{
         items[id].transitions.push(Transition(msg.sender, decision, block.timestamp));
