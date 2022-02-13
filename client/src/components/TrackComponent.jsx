@@ -57,11 +57,9 @@ function Track(props){
                   circleCol={(transition.decision)?"bg-success":"bg-danger"}
                    align={(index%2)?"left-aligned":""} />))
               }
-              <RenderCard  itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-success"}/>
-              <RenderCard align={"left-aligned"} itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-secondary"}/>
-              <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} circleCol={"bg-info"}/>
-              <RenderCard itemname={"Transition Name"} itemdescription={" Some Description Some Description Some Description Some Description Some Description Some Description Some Description Some Description "} align={"left-aligned"} circleCol={"bg-warning"}/>                      
-              <Button onClick={props.payManufacturarModal}>loooo</Button>
+              <RenderCard  itemname={"Apple Inc"} itemdescription={" Apple Inc. designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company's products include iPhone, Mac, iPad, and Wearables, Home and Accessories. iPhone is the Company's line of smartphones based on its iOS operating system. "} circleCol={"bg-success"}/>
+              <RenderCard align={"left-aligned"} itemname={"Administration marocaine des Douanes et Impôts Indirects"} itemdescription={" Chargée de la perception des droits et taxes douanières, du recouvrement des impositions fiscales et parafiscales, de la lutte contre les trafics illicites et du contrôle des marchandises et des personnes aux frontières "} circleCol={"bg-success"}/>
+              <RenderCard itemname={"Marjane Hay Riad, Rabat"} itemdescription={" Marjane (also Marjane Holding) a Moroccan hypermarket chain. It is wholly owned by SNI,the name of the company has changed to 'Al Mada'. The chain opened its first supermarket, in 1990, in Rabat. In 2008, the company had 33 hypermarkets around Morocco. "} circleCol={"bg-success"}/>
 
               <article className="timeline-entry begin">
                 <div className="timeline-entry-inner">

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 import Track from './TrackComponent';
-import HeaderNav from './HeaderNavComponent';
+import Header from './HeaderComponent';
 import Test from './TestComponent';
 import Test2 from './Test2Component';
 import PayTransition from './PayTransitionComponent';
@@ -10,14 +10,11 @@ import TrackerContract from "../contracts/TrackerContract.json";
 import SupplyBank from "../contracts/SupplyBank.json"
 import SupplyCoin from "../contracts/SupplyCoin.json"
 import getWeb3 from "../getWeb3";
-import { ModalBody, Modal, Button } from "reactstrap";
-
-
 
 class Main extends Component{
-    state = {networkId: 3, web3: null, accounts: null, ii: null, trackerContract: null, 
+    state = {networkId: 3, web3: null, accounts: null, trackerContract: null, 
       supplyBankContract: null, supplyCoinContract: null, manufacturer: null, transitioners: null,
-       item: null, a: null, itemIn: null, purchaseCoinModalOpened: false, paymentModalOpened: false};
+       item: null};
 
     componentDidMount = async () => {
       try {
@@ -62,71 +59,48 @@ class Main extends Component{
       const { accounts, trackerContract } = this.state;
   
 
-      // Get the value from the contract to prove it worked.
-      const transitionersTemp = {};
-      const itemResponse = await trackerContract.methods.getItem("product00").call();
-      itemResponse.transitions.map(async tr => {
-        transitionersTemp[tr.transitionerAddr]=(await trackerContract.methods.getTransitioner(tr.transitionerAddr).call());
-      });
+      // // Get the value from the contract to prove it worked.
+      // const transitionersTemp = {};
+      // const itemResponse = await trackerContract.methods.getItem("product00").call();
+      // itemResponse.transitions.map(async tr => {
+      //   transitionersTemp[tr.transitionerAddr]=(await trackerContract.methods.getTransitioner(tr.transitionerAddr).call());
+      // });
 
 
-      // await trackerContract.methods.addItem("product02", "name2", "description2").call();
-      // const itemResponse2 = await trackerContract.methods.getItem("product02").call();
+      // // await trackerContract.methods.addItem("product02", "name2", "description2").call();
+      // // const itemResponse2 = await trackerContract.methods.getItem("product02").call();
   
-      // Update state with the result.
-      this.setState({  item: itemResponse, itemIn: itemResponse, transitioners: transitionersTemp });
+      // // Update state with the result.
+      // this.setState({  item: itemResponse, itemIn: itemResponse, transitioners: transitionersTemp });
 
     };
 
-    purchaseCoinModal = ()=>{
-      console.log("coin model");
-      this.setState({purchaseCoinModalOpened: !this.state.purchaseCoinModalOpened})
-    }
-    payManufacturerModal = () =>{
-      console.log("man model");
-      this.setState({paymentModalOpened: !this.state.paymentModalOpened})
-    }
-    sendEther = async() => {
+    sendEther = async(value) => {
+      // NB: value in ether 18 decimals
       const { accounts, supplyBankContract } = this.state;
-      await supplyBankContract.methods.addBalance().send({from: accounts[0], value: 1e18});
-
+      await supplyBankContract.methods.addBalance().send({from: accounts[0], value: (value*1e18)});
     }
-    approveCoin = async() => {
-      const { accounts, supplyCoinContract, supplyBankContract } = this.state;
-      var amount = 1e8;
-      await supplyCoinContract.methods.approve(SupplyBank.networks[this.state.networkId].address, amount).send({from: accounts[0]});
+    approveCoin = async(amount) => {
+      // note amount of ERC20 : 8 decimals
+      const { accounts, supplyCoinContract } = this.state;
+      await supplyCoinContract.methods.approve(SupplyBank.networks[this.state.networkId].address, (amount*1e8)).send({from: accounts[0]});
     }
-    payManufacturer = async() => {
-      const { accounts, supplyCoinContract, supplyBankContract } = this.state;
-      var amount = 1e8;
-      await supplyCoinContract.methods.paySupplierWithSPL("", amount).send({from: accounts[0]});
+    payManufacturer = async(amount, manufacturerAddr) => {
+      const { accounts, supplyBankContract } = this.state;
+      await supplyBankContract.methods.paySupplierWithSPL(manufacturerAddr, (amount*1e8)).send({from: accounts[0]});
     }
 
     
     render(){
-        // if (!this.state.web3) {
-        //     return <div>Loading Web3, accounts, and contract...</div>;
-        //   }
-        console.log(this.state.transitioners)
-
+        if (!this.state.web3) {
+            return <div>Loading Web3, accounts, and contract...</div>;
+          }
         return (
-            <div className="App">
-                <HeaderNav purchaseCoinModal={this.purchaseCoinModal}/>
-                <Track item={this.state.item} transitioners={this.state.transitioners} payManufacturerModal={this.payManufacturerModal}/>
-                {this.state.purchaseCoinModalOpened &&
-                <div>
-                  <div><input type="number" name="amount" />Ether</div>
-                  <Button onClick={this.sendEther}>Deposit Ether</Button>
-                </div>
-                }
-                {this.state.paymentModalOpened &&
-                  <div>
-                  <div><input type="number" name="amount" />Ether</div>
-                  <Button onClick={this.sendEther}>Deposit Ether</Button>
-                  </div>
-                }
-                <Button onClick={this.approveCoin}>Approve</Button>
-                <Button onClick={this.sendEther}>Pay</Button>
+            <div className="app">
+                <Header sendEther={this.sendEther} />
+                <Track item={this.state.item} transitioners={this.state.transitioners} 
+                        manufacturer={this.state.manufacturer} approveCoin={this.approveCoin} 
+                        payManufacturer={this.payManufacturer} />
             </div>
         );
     }
