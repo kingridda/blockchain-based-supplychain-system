@@ -39,23 +39,21 @@ class Track extends Component{
     this.state = {
       isModalOpen: false,
       paymentAdress: null,
-      amount: 0
     };
   }
 
-  toggleModal(paymentAdress, amount) {
+  toggleModal(paymentAdress) {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-      paymentAdress: paymentAdress,
-      amount: amount
+      paymentAdress: paymentAdress
     });
   }
 
-  handleSubmit(event) {
-    this.toggleModal();
-    this.props.approveCoin(this.state.amount);
-//    this.props.payManufacturer(this.state.paymentAdress, this.state.amount);
+  async handleSubmit(event) {
     event.preventDefault();
+    this.toggleModal();
+    await this.props.approveCoin(this.amount.value);
+    await this.props.payManufacturer(this.state.paymentAdress, this.amount.value)
   }
 
   render(){
@@ -64,13 +62,12 @@ class Track extends Component{
       <ModalBody>
       <Form onSubmit={this.handleSubmit}>
               <FormGroup>
-                  <Label htmlFor="amount">Amount of SPL Token to redeem</Label>
+                  <Label htmlFor="amount">Amount of SPL Token to send</Label>
                   <Input type="number" id="amount" name="amount"
                       innerRef={(input) => this.amount = input} />
               </FormGroup>
-              <Button type="submit" value="submit" color="primary">Approve</Button>
+              <Button type="submit" value="submit" color="primary">Pay</Button>
           </Form>
-          <Button type="submit" value="submit" color="primary">Pay</Button>
       </ModalBody>
     </Modal>);
 
