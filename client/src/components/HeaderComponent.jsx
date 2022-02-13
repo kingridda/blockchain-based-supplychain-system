@@ -12,19 +12,21 @@ class Header extends Component{
 
 
     this.state = {
-      isModalOpen: false
+      isModalOpen: false,
+      amount: 0
     };
   }
 
-  toggleModal() {
+  toggleModal(amount) {
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
+      amount: amount
     });
   }
 
   handleSubmit(event) {
     this.toggleModal();
-    this.props.sendEther(1);
+    this.props.sendEther(this.state.amount);
     event.preventDefault();
   }
 
@@ -53,7 +55,7 @@ class Header extends Component{
                   <Nav className="ml-auto" navbar>
                     <NavItem>
                       <NavLink onClick="">
-                        <Button color="warning" onClick={this.toggleModal}> Get SupplyCoin (SPL)</Button>
+                        <Button color="warning" onClick={() => this.toggleModal(1)}> Get SupplyCoin (SPL)</Button>
                       </NavLink>
                     </NavItem>
                   </Nav>

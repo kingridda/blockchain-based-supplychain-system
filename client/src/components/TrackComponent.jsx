@@ -1,65 +1,101 @@
-import React from "react";
-import PayTransition from './PayTransitionComponent';
+import React, {Component} from "react";
 import { format } from 'date-fns';
 
+import {Modal, ModalBody, ModalHeader, Label, Input, Form, FormGroup, Button} from 'reactstrap';
 
 //0xc27a6adac593d1c02355f307ea92f6261269566d
 
 import "../test.css";
-import { Button } from "reactstrap";
 
 
 
-function RenderCard({itemname, itemdescription, align, circleCol, itemDate}){
+function RenderCard({trName, trDescription, trAddress, align, circleCol, trDate, trModalToggle}){
   return(
     <article className={'timeline-entry ' + align}>
       <div className="timeline-entry-inner">
         <time className="timeline-time" dateTime="2014-01-10T03:45">
-          <span>{format(new Date(), 'yyyy/MM/dd kk:mm') }</span>
+          <span>{format(new Date(trDate*1000), 'yyyy/MM/dd') }</span>
         </time>
         <div className= {'timeline-icon ' +  circleCol}>
           <i className="entypo-feather" />
         </div>
-        <div className="timeline-label">
-          <h2><a href="#">{itemname}</a></h2>
-          <p>{itemdescription}</p>
-
+        <div className="timeline-label" onClick={() =>trModalToggle(trAddress)}>
+          <h2>{trName}</h2>
+          <p>{trDescription}</p>
         </div>
       </div>
-  </article>
-
-  );
+  </article>);
 }
 
 
-function Track(props){
-  var paymentOpened = true;
+class Track extends Component{
+  constructor(props){
+    super(props);
+
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+
+    this.state = {
+      isModalOpen: false,
+      paymentAdress: null,
+      amount: 0
+    };
+  }
+
+  toggleModal(paymentAdress, amount) {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+      paymentAdress: paymentAdress,
+      amount: amount
+    });
+  }
+
+  handleSubmit(event) {
+    this.toggleModal();
+    this.props.approveCoin(this.state.amount);
+//    this.props.payManufacturer(this.state.paymentAdress, this.state.amount);
+    event.preventDefault();
+  }
+
+  render(){
+    const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+      <ModalHeader toggle={this.toggleModal}>Pay Using SPL</ModalHeader>
+      <ModalBody>
+      <Form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                  <Label htmlFor="amount">Amount of SPL Token to redeem</Label>
+                  <Input type="number" id="amount" name="amount"
+                      innerRef={(input) => this.amount = input} />
+              </FormGroup>
+              <Button type="submit" value="submit" color="primary">Approve</Button>
+          </Form>
+          <Button type="submit" value="submit" color="primary">Pay</Button>
+      </ModalBody>
+    </Modal>);
+
 
 
     return (
-
+      <React.Fragment>
         <div>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
         {/*---- Include the above in your HEAD tag --------*/}
         <div className="container">
           <div className="row">
             <div className="timeline-centered">
-              <p>
-
-              </p>
+              <p></p>
               {
-              props.item && props.item.transitions.map((transition, index) => 
-                (<RenderCard key={transition.name+transition.createdAt+index} 
-                  onClick={props.payManufacturarModal}
-                  itemname = {""}
-                  itemdescription = {""}
-                  itemDate={transition.createdAt} 
+              this.props.item && this.props.item.transitions.map((transition, index) => 
+                (<RenderCard key={index} 
+                  trName = {this.props.transitioners[transition.transitionerAddr].name}
+                  trDescription = {this.props.transitioners[transition.transitionerAddr].description}
+                  trAddress={transition.transitionerAddr}
+                  trDate={transition.createdAt}
+                  trModalToggle={this.toggleModal}
                   circleCol={(transition.decision)?"bg-success":"bg-danger"}
-                   align={(index%2)?"left-aligned":""} />))
+                  align={(index%2)?"left-aligned":""} />))
               }
-              <RenderCard  itemname={"Apple Inc"} itemdescription={" Apple Inc. designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company's products include iPhone, Mac, iPad, and Wearables, Home and Accessories. iPhone is the Company's line of smartphones based on its iOS operating system. "} circleCol={"bg-success"}/>
-              <RenderCard align={"left-aligned"} itemname={"Administration marocaine des Douanes et Impôts Indirects"} itemdescription={" Chargée de la perception des droits et taxes douanières, du recouvrement des impositions fiscales et parafiscales, de la lutte contre les trafics illicites et du contrôle des marchandises et des personnes aux frontières "} circleCol={"bg-success"}/>
-              <RenderCard itemname={"Marjane Hay Riad, Rabat"} itemdescription={" Marjane (also Marjane Holding) a Moroccan hypermarket chain. It is wholly owned by SNI,the name of the company has changed to 'Al Mada'. The chain opened its first supermarket, in 1990, in Rabat. In 2008, the company had 33 hypermarkets around Morocco. "} circleCol={"bg-success"}/>
 
               <article className="timeline-entry begin">
                 <div className="timeline-entry-inner">
@@ -71,9 +107,10 @@ function Track(props){
             </div>
           </div>
         </div>
-      </div>       
-        
-    );
+      </div>
+      {modal}
+    </React.Fragment>);
+  }
 }
 
 export default Track;

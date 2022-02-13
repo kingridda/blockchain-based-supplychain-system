@@ -66,12 +66,18 @@ class Main extends Component{
       //   transitionersTemp[tr.transitionerAddr]=(await trackerContract.methods.getTransitioner(tr.transitionerAddr).call());
       // });
 
-
+      var tempItem = {name: "iPhone 11", description: "With its 6.1-inch display, the iPhone 11 is between the 5.4-inch 'mini' iPhone models like the iPhone 13 mini and Apple's larger models like the 6.7-inch iPhone 13 Pro Max in size. The iPhone 11 has an edge-to-edge display with slim bezels and no Home button, adopting a notch at the top for the TrueDepth camera system", createdAt: (new Date().getTime())/1000, 
+                      transitions: [ {transitionerAddr: 0, decision: true, createdAt: (new Date().getTime())/1000 }, {transitionerAddr: 0, decision: true, createdAt: (new Date().getTime())/1000 }, {transitionerAddr: 1, decision: true, createdAt: (new Date().getTime())/1000 }]};
+      
+      var manu = {name: "Apple Inc", description: " Apple Inc. designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services. The Company's products include iPhone, Mac, iPad, and Wearables, Home and Accessories. iPhone is the Company's line of smartphones based on its iOS operating system. ", createdAt: (new Date().getTime())/1000}
+      var trs =  [
+        {name: "Administration marocaine des Douanes et Impôts Indirects", description: " Chargée de la perception des droits et taxes douanières, du recouvrement des impositions fiscales et parafiscales, de la lutte contre les trafics illicites et du contrôle des marchandises et des personnes aux frontières ", createdAt: (new Date().getTime())/1000}, 
+        {name: "Marjane Hay Riad, Rabat", description: " Marjane (also Marjane Holding) a Moroccan hypermarket chain. It is wholly owned by SNI,the name of the company has changed to 'Al Mada'. The chain opened its first supermarket, in 1990, in Rabat. In 2008, the company had 33 hypermarkets around Morocco. ", createdAt: (new Date().getTime())/1000}] 
       // // await trackerContract.methods.addItem("product02", "name2", "description2").call();
       // // const itemResponse2 = await trackerContract.methods.getItem("product02").call();
   
       // // Update state with the result.
-      // this.setState({  item: itemResponse, itemIn: itemResponse, transitioners: transitionersTemp });
+       this.setState({  item: tempItem, manufacturer: manu, transitioners: trs});
 
     };
 
@@ -85,7 +91,7 @@ class Main extends Component{
       const { accounts, supplyCoinContract } = this.state;
       await supplyCoinContract.methods.approve(SupplyBank.networks[this.state.networkId].address, (amount*1e8)).send({from: accounts[0]});
     }
-    payManufacturer = async(amount, manufacturerAddr) => {
+    payManufacturer = async(manufacturerAddr, amount) => {
       const { accounts, supplyBankContract } = this.state;
       await supplyBankContract.methods.paySupplierWithSPL(manufacturerAddr, (amount*1e8)).send({from: accounts[0]});
     }
