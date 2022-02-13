@@ -19,7 +19,7 @@ function RenderCard({trName, trDescription, trAddress, align, circleCol, trDate,
         <div className= {'timeline-icon ' +  circleCol}>
           <i className="entypo-feather" />
         </div>
-        <div className="timeline-label" onClick={() =>trModalToggle(trAddress)}>
+        <div className="timeline-label" onClick={() =>trModalToggle(trAddress, trName)}>
           <h2>{trName}</h2>
           <p>{trDescription}</p>
         </div>
@@ -39,13 +39,15 @@ class Track extends Component{
     this.state = {
       isModalOpen: false,
       paymentAdress: null,
+      trName: null
     };
   }
 
-  toggleModal(paymentAdress) {
+  toggleModal(paymentAdress, trName) {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-      paymentAdress: paymentAdress
+      paymentAdress: paymentAdress,
+      trName: trName
     });
   }
 
@@ -55,11 +57,19 @@ class Track extends Component{
     await this.props.approveCoin(this.amount.value);
     await this.props.payManufacturer(this.state.paymentAdress, this.amount.value)
   }
+  
+  async addTransition(event){
+    event.preventDefault();
+    if(window.confirm("Are you sure you wan't to be added as a transition for the Product ?"))
+      await this.props.addTransition(this.props.prodId);
+      
+  }
 
   render(){
     const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
       <ModalHeader toggle={this.toggleModal}>Pay Using SPL</ModalHeader>
       <ModalBody>
+        Do you want to send SPL Coins to {this.state.trName} ?
       <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                   <Label htmlFor="amount">Amount of SPL Token to send</Label>
@@ -84,7 +94,7 @@ class Track extends Component{
               <p></p>
               {
               this.props.item && this.props.item.transitions.map((transition, index) => 
-                (<RenderCard key={index} 
+                (<RenderCard key={index}
                   trName = {this.props.transitioners[transition.transitionerAddr].name}
                   trDescription = {this.props.transitioners[transition.transitionerAddr].description}
                   trAddress={transition.transitionerAddr}
@@ -95,9 +105,10 @@ class Track extends Component{
               }
 
               <article className="timeline-entry begin">
-                <div className="timeline-entry-inner">
+                <div className="timeline-entry-inner" >
                   <div className="timeline-icon" 
-                  style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}>
+                  style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}
+                  onClick={this.addTransition}>
                     <span className="fa fa-plus fa-lg"></span>
                   </div>
                 </div>
