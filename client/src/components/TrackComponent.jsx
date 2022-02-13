@@ -96,8 +96,9 @@ class Track extends Component{
 
               <article className="timeline-entry begin">
                 <div className="timeline-entry-inner">
-                  <div className="timeline-icon" style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}>
-                    <i className="entypo-flight" />
+                  <div className="timeline-icon" 
+                  style={{WebkitTransform: 'rotate(-90deg)', MozTransform: 'rotate(-90deg)'}}>
+                    <span className="fa fa-plus fa-lg"></span>
                   </div>
                 </div>
               </article>

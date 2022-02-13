@@ -12,8 +12,7 @@ class Header extends Component{
 
 
     this.state = {
-      isModalOpen: false,
-      amount: 0
+      isModalOpen: false
     };
   }
 
@@ -48,13 +47,13 @@ class Header extends Component{
 
     return (
         <React.Fragment>
-            <Navbar color="dark" expand="md" dark>
+            <Navbar dark expand="md" >
               <div className="container">
                   <NavbarBrand className="mr-auto" href="/">Supply App</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
                       <NavLink onClick="">
-                        <Button color="warning" onClick={this.toggleModal}> Get SupplyCoin (SPL)</Button>
+                        <Button color="success" onClick={this.toggleModal}> Get SupplyCoin (SPL)</Button>
                       </NavLink>
                     </NavItem>
                   </Nav>
