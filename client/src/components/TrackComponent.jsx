@@ -31,7 +31,6 @@ function RenderCard({trName, trDescription, trAddress, align, circleCol, trDate,
 class Track extends Component{
   constructor(props){
     super(props);
-
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -58,16 +57,17 @@ class Track extends Component{
     await this.props.payManufacturer(this.state.paymentAdress, this.amount.value)
   }
   
-  async addTransition(event){
-    event.preventDefault();
+   addTransition = async()=> {
     if(window.confirm("Are you sure you wan't to be added as a transition for the Product ?"))
-      await this.props.addTransition(this.props.prodId);
+        await this.props.addTransition(this.props.prodId);
       
   }
 
   render(){
     const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} centered>
-      <ModalHeader toggle={this.toggleModal}>Pay Using SPL</ModalHeader>
+      <ModalHeader toggle={this.toggleModal}>
+        <span >Send SPL payment</span>
+      </ModalHeader>
       <ModalBody>
         Do you want to send SPL Coins to {this.state.trName} ?
       <Form onSubmit={this.handleSubmit}>
@@ -76,11 +76,10 @@ class Track extends Component{
                   <Input type="number" id="amount" name="amount"
                       innerRef={(input) => this.amount = input} />
               </FormGroup>
-              <Button type="submit" value="submit" color="primary">Pay</Button>
+              <Button style={{float: 'right'}} type="submit" value="submit" color="primary">Send SPL</Button>
           </Form>
       </ModalBody>
     </Modal>);
-
 
 
     return (

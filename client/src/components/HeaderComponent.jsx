@@ -38,7 +38,7 @@ class Header extends Component{
                                   <Input type="number" id="amount" name="amount"
                                       innerRef={(input) => this.amount = input} />
                               </FormGroup>
-                              <Button type="submit" value="submit" color="primary">Purchase SPL coins</Button>
+                              <Button style={{float: 'right'}} type="submit" value="submit" color="primary">Purchase SPL coins</Button>
                           </Form>
                       </ModalBody>
                     </Modal>);
