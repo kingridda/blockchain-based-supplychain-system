@@ -29,7 +29,7 @@ class Header extends Component{
   }
 
   render() {
-    const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+    const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} centered>
                       <ModalHeader toggle={this.toggleModal}>Purchase SPL Coin now</ModalHeader>
                       <ModalBody>
                       <Form onSubmit={this.handleSubmit}>

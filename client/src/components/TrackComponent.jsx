@@ -66,7 +66,7 @@ class Track extends Component{
   }
 
   render(){
-    const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+    const modal = (<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} centered>
       <ModalHeader toggle={this.toggleModal}>Pay Using SPL</ModalHeader>
       <ModalBody>
         Do you want to send SPL Coins to {this.state.trName} ?
